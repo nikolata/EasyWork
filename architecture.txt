@@ -1,0 +1,27 @@
+TODO 01.06:
+	1 Candidates:
+		- log in
+		- log out
+		- show_all_jobs (choose category)
+		- update profile
+		- show_all_messages_with (choose firm)
+		- show_all_jobs_that_i_liked
+		- text_to (choose firm)
+		- see_firm_account
+		- deactivate_account
+	-look for email sender documentation
+
+
+	2 Companies
+		- log in
+		- log out
+		- show_all_jobs
+		- add_job
+		- delete_job
+		- update_job
+		- see_all_candidates
+		- see_all_candidates_that_liked_this_job (choose job)
+		- see candidate profile
+		- text_to (choose candidate)
+		- update profile
+		- deactivate account
