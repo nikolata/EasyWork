@@ -22,3 +22,9 @@ class CompanyCaller:
 
     def call_show_all_jobs(self):
         self.company.show_all_jobs()
+
+    def call_delete_job(self):
+        self.company.delete_job()
+
+    def call_update_job(self):
+        self.company.update_job()

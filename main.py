@@ -19,4 +19,6 @@ if __name__ == '__main__':
     # company.call_update_profile()
     # company.call_show_all_categories()
     company.call_log_in()
-    company.call_show_all_jobs()
+    # company.call_update_job()
+    # company.call_show_all_jobs()
+    # company.call_delete_job()

@@ -15,7 +15,7 @@ class CompanyModel(Base):
     active = Column(Boolean, default=True)
 
 
-class ViewedCandidatesByCompany(Base):
+class ViewedCandidatesByCompanyModel(Base):
     __tablename__ = 'viewed_by_company'
     viewed_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
@@ -25,7 +25,7 @@ class ViewedCandidatesByCompany(Base):
     company = relationship('CompanyModel')
 
 
-class LikedCandidatesByCompany(Base):
+class LikedCandidatesByCompanyModel(Base):
     __tablename__ = 'liked_by_compay'
     liked_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
