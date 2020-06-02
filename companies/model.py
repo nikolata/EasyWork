@@ -10,6 +10,7 @@ class CompanyModel(Base):
     company_id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     email = Column(String, unique=True)
+    password = Column(String)
     description = Column(String)
     active = Column(Boolean, default=True)
 
