@@ -43,3 +43,7 @@ class JobGateway:
                         JobModel.salary_type: salary_type,
                         JobModel.is_net: is_net,
                         }, synchronize_session=False)
+
+    def select_jobs_by_category(category):
+        with session_scope() as session:
+            return session.query(JobModel).filter(JobModel.category.name == category).all()

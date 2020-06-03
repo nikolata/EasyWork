@@ -12,7 +12,7 @@ class MessageModel(Base):
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
     timestamp = Column(DateTime, default=datetime.now())
     send_by = Column(Boolean)
-    seen = Column(Boolean)
+    seen = Column(Boolean, default=False)
     message = Column(String)
     company = relationship('CompanyModel')
     candidate = relationship('CandidateModel')
