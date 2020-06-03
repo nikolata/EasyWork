@@ -1,4 +1,6 @@
 from .controller import CompanyController
+from flask import render_template, request, redirect, url_for, session
+from utls import login_required
 
 
 class CompanyView:
@@ -11,12 +13,14 @@ class CompanyView:
         self.company.log_in(email=email, password=password)
 
     def sign_up(self):
-        name = input("Name: ")
-        email = input("Email: ")
-        password = input("Password: ")
-        description = input("Description: ")
-        self.company.sign_up(name=name, email=email, password=password, description=description)
+        if request.method == 'POST':
+            self.company.sign_up(name=request.form["name"], email=request.form["email"],
+                                 password=request.form["password"], description=request.form["description"])
+            session['logged_in'] = True
+            return redirect(url_for('welcome'))
+        return render_template("sign_up.html")
 
+    @login_required
     def update_profile(self):
         curr_company = self.company.get_current_company()
         print(curr_company.email)
