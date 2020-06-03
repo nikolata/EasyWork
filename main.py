@@ -10,7 +10,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash, ses
 from functools import wraps
 from companies.view import CompanyView
 from candidates.view import CandidateView
-from start import app
+from settings import app
 
 app.secret_key = '5Al6aSD}sy,$OZ_'
 
@@ -37,17 +37,16 @@ def sign_up_as_company():
 def log_in():
     company_view = CompanyView()
     error = None
+    candidate_view = CandidateView()
     if request.method == 'POST':
         if company_view.log_in(email=request.form['email'], password=request.form['password']):
             session['logged_in'] = True
             return company_view.change_to_company_home()
+        elif candidate_view.log_in(email=request.form['email'], password=request.form['password']):
+            session['logged_in'] = True
+            return candidate_view.candidate_home()
         else:
-            candidate_view = CandidateView()
-            if candidate_view.log_in(email=request.form['email'], password=request.form['password']):
-                session['logged_in'] = True
-                return candidate_view.candidate_home()
-            else:
-                error = 'Wrong input!!!!'
+            error = 'Wrong input!!!!'
     return render_template('log_in.html', error=error)
 
 

@@ -2,7 +2,7 @@ from .controller import CompanyController
 from flask import Flask, render_template, request, redirect, url_for, session
 from utls import login_required
 from candidates.controller import CandidateController
-from start import app
+from settings import app
 
 
 class CompanyView:
@@ -17,7 +17,17 @@ class CompanyView:
 
     @app.route('/company_home', methods=['POST', 'GET'])
     def company_home():
-        return "Company_home"
+        if request.method == 'POST':
+            if request.form['submit_button'] == 'Add job':
+                return redirect(url_for('add_job'))
+            if request.form['submit_button'] == 'Show all jobs':
+                pass
+            if request.form['submit_button'] == 'Delete job':
+                pass
+            if request.form['submit_button'] == 'Update job':
+                pass
+        company = CompanyController()
+        return render_template("company_home.html", company=company.get_current_company())
 
     def sign_up(self):
         if request.method == 'POST':
@@ -48,18 +58,30 @@ class CompanyView:
         for category in categories:
             print(category.category_id, category.name)
 
-    def add_job(self):
-        self.show_all_categories()
-        category_id = input("Please choose category (id): ")
-        title = input("Please insert title: ")
-        city = input("Please insert city: ")
-        position = input("Please insert position: ")
-        description = input("Please insert job description: ")
-        salary = input("Please insert job salary: ")
-        salary_type = input("Please insert job salary type(lv, eur...): ")
-        is_net = input("Please insert gross or net[0/1]: ")
-        self.company.add_job(int(category_id), title, city, position, description, int(salary),
-                             salary_type, int(is_net))
+    @app.route('/company_home/add_job', methods=['GET', 'POST'])
+    def add_job():
+        categories = CompanyController().get_all_categories()
+        if request.method == 'POST':
+            if request.form['salary_type'] == 'lv':
+                salary_type = 'lv'
+            else:
+                salary_type = 'eur'
+            if request.form['is_net'] == 'gross':
+                is_net = 0
+            else:
+                is_net = 1
+            for category in categories:
+                if request.form['category'] == category.name:
+                    CompanyController().add_job(int(category.category_id),
+                                                request.form['title'],
+                                                request.form['city'],
+                                                request.form['position'],
+                                                request.form['description'],
+                                                int(request.form['salary']),
+                                                salary_type,
+                                                is_net)
+                    return redirect(url_for('company_home'))
+        return render_template('add_job.html', categories=categories)
 
     def show_all_jobs(self):
         jobs = self.company.get_all_jobs()
