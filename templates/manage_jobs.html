@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	<form action='' method='POST'>
+		<input class="btn btn-default" type="submit" name="submit_button" value="Add job">
+		</br>
+		<label for="job">Choose job and what to do:</label>
+		<select name="job" id="job">
+			{% for job in jobs %}
+			<option value={{ job.job_id }} name={{ request.form.job }}>{{ job.title }}</option>
+			{% endfor %}
+		</select>
+		<input class="btn btn-default" type="submit" name="submit_button" value="Update job">
+		<input class="btn btn-default" type="submit" name="submit_button" value="Delete job">
+	</form>
+		</br>
+		<table>
+			<tr>
+				<th>Category</th>
+				<th>Title</th>
+				<th>City</th>
+				<th>Position</th>
+				<th>Description</th>
+				<th>Salary</th>
+				<th>Created at</th>
+			</tr>
+			{% for job in jobs %}
+				<tr>
+					{% for category in categories %}
+						{% if job.category_id == category.category_id %}
+							<td>{{ category.name }}</td>
+						{% endif %}
+					{% endfor %}
+					<td>{{ job.title }}</td>
+					<td>{{ job.city }}</td>
+					<td>{{ job.position }}</td>
+					<td>{{ job.description }}</td>
+					{% if job.is_net == 1%}
+						<td>{{ job.salary }}{{ job.salary_type }} neto</td>
+					{% else %}
+						<td>{{ job.salary }}{{ job.salary_type }} gross</td>
+					{% endif %}
+					<td>{{ job.timestamp }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+</body>
+</html>

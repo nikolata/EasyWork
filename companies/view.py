@@ -18,14 +18,14 @@ class CompanyView:
     @app.route('/company_home', methods=['POST', 'GET'])
     def company_home():
         if request.method == 'POST':
-            if request.form['submit_button'] == 'Add job':
-                return redirect(url_for('add_job'))
-            if request.form['submit_button'] == 'Show all jobs':
-                pass
-            if request.form['submit_button'] == 'Delete job':
-                pass
-            if request.form['submit_button'] == 'Update job':
-                pass
+            if request.form['submit_button'] == 'Manage jobs':
+                return redirect(url_for('manage_jobs'))
+            # if request.form['submit_button'] == 'Show all jobs':
+            #     pass
+            # if request.form['submit_button'] == 'Delete job':
+            #     pass
+            # if request.form['submit_button'] == 'Update job':
+            #     pass
         company = CompanyController()
         return render_template("company_home.html", company=company.get_current_company())
 
@@ -36,6 +36,21 @@ class CompanyView:
             session['logged_in'] = True
             return redirect(url_for('welcome'))
         return render_template("sign_up.html")
+
+    @app.route('/company_home/manage_jobs', methods=['POST', 'GET'])
+    def manage_jobs():
+        jobs = CompanyController().get_all_jobs()
+        categories = CompanyController().get_all_categories()
+        if request.method == 'POST':
+            if request.form['submit_button'] == 'Add job':
+                return redirect(url_for('add_job'))
+            if request.form['submit_button'] == 'Update job':
+                session['job_id'] = request.form['job']
+                return redirect(url_for('update_job'))
+            if request.form['submit_button'] == 'Delete job':
+                CompanyController().delete_job(int(request.form['job']))
+                return redirect(url_for('manage_jobs'))
+        return render_template('manage_jobs.html', jobs=jobs, categories=categories)
 
     @login_required
     def update_profile(self):
@@ -62,6 +77,8 @@ class CompanyView:
     def add_job():
         categories = CompanyController().get_all_categories()
         if request.method == 'POST':
+            if request.form['submit_button'] == 'Go back':
+                return redirect(url_for('company_home'))
             if request.form['salary_type'] == 'lv':
                 salary_type = 'lv'
             else:
@@ -80,50 +97,37 @@ class CompanyView:
                                                 int(request.form['salary']),
                                                 salary_type,
                                                 is_net)
-                    return redirect(url_for('company_home'))
+                    return redirect(url_for('manage_jobs'))
         return render_template('add_job.html', categories=categories)
 
-    def show_all_jobs(self):
-        jobs = self.company.get_all_jobs()
+    # def show_all_jobs(self):
+    #     return self.company.get_all_jobs()
+
+    @app.route('/company_home/update_job', methods=['GET', 'POST'])
+    def update_job():
+        jobs = CompanyController().get_all_jobs()
         for job in jobs:
-            print('-----------------')
-            print(job.job_id)
-            print(job.title)
-            print(job.city)
-            print(job.position)
-            print(job.description)
-            if job.is_net:
-                print(str(job.salary) + job.salary_type + " neto")
-            else:
-                print(str(job.salary) + job.salary_type + " bruto")
-            print(job.timestamp)
-
-    def delete_job(self):
-        self.show_all_jobs()
-        choosed_job = input("Insert the job id that you want to delete: ")
-        self.company.delete_job(choosed_job)
-
-    def update_job(self):
-        self.show_all_jobs()
-        choosed_job = input("Insert the job id that you want to update: ")
-        job = self.company.get_specific_job(choosed_job)
-        print("Old title: " + job.title)
-        new_title = input("New title: ")
-        print("Old city: " + job.city)
-        new_city = input("New city: ")
-        print("Old position: " + job.position)
-        new_position = input("New position: ")
-        print("Old description: " + job.description)
-        new_description = input("New description: ")
-        print("Old salary: " + str(job.salary))
-        new_salary = input("New salary: ")
-        new_salary_type = input("New salary type: ")
-        new_is_net = input("Gross or net [0/1]: ")
-        self.company.update_job(choosed_job,
-                                new_title,
-                                new_city,
-                                new_position,
-                                new_description,
-                                int(new_salary),
-                                new_salary_type,
-                                int(new_is_net))
+            if job.job_id == int(session['job_id']):
+                current_job = job
+        if request.method == 'POST':
+            if request.form['submit_button'] == 'Update job':
+                if request.form['job_salary_type'] == 'lv':
+                    salary_type = 'lv'
+                else:
+                    salary_type = 'eur'
+                if request.form['is_net'] == 'gross':
+                    is_net = 0
+                else:
+                    is_net = 1
+                CompanyController().update_job(current_job.job_id,
+                                               request.form['job_title'],
+                                               request.form['job_city'],
+                                               request.form['job_position'],
+                                               request.form['job_description'],
+                                               int(request.form['job_salary']),
+                                               salary_type,
+                                               is_net)
+                return redirect(url_for('company_home'))
+            if request.form['submit_button'] == 'Go back':
+                return redirect(url_for('company_home'))
+        return render_template('update_job.html', job=current_job)
