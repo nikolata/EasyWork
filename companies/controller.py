@@ -13,7 +13,7 @@ class CompanyController:
         company = self.company_gateway.log_in(email=email, password=password)
         if len(company) != 0:
             settings.CURRENT_COMPANY_EMAIL = email
-            return company
+            return True
         else:
             return False
 

@@ -1,16 +1,23 @@
 from .controller import CompanyController
-from flask import render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session
 from utls import login_required
+from candidates.controller import CandidateController
+from start import app
 
 
 class CompanyView:
     def __init__(self):
         self.company = CompanyController()
 
-    def log_in(self):
-        email = input("Email: ")
-        password = input("Password: ")
-        self.company.log_in(email=email, password=password)
+    def log_in(self, email, password):
+        return self.company.log_in(email=request.form['email'], password=request.form['password'])
+
+    def change_to_company_home(self):
+        return redirect(url_for('company_home'))
+
+    @app.route('/company_home', methods=['POST', 'GET'])
+    def company_home():
+        return "Company_home"
 
     def sign_up(self):
         if request.method == 'POST':

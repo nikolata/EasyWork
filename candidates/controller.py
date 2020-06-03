@@ -1,5 +1,5 @@
 from .gateway import CandidateGateway, ViewedJobsByCandidateGateway, LikedJobsByCandidateGateway
-from jobs.job_gateway import JobController
+from jobs.controller import JobController
 import hashlib
 
 
