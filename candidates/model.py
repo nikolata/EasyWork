@@ -14,10 +14,12 @@ class CandidateModel(Base):
     phone = Column(String)
     about_me = Column(String)
     cv_link = Column(String)
+    field_of_work = Column(Integer, ForeignKey('categories.category_id'))
     active = Column(Boolean, default=True)
+    category = relationship('CategoryModel')
 
 
-class ViewedJobsByCandidate(Base):
+class ViewedJobsByCandidateModel(Base):
     __tablename__ = 'viewed_by_candidate'
     viewed_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
@@ -27,7 +29,7 @@ class ViewedJobsByCandidate(Base):
     job = relationship('JobModel')
 
 
-class LikedJobsByCandidate(Base):
+class LikedJobsByCandidateModel(Base):
     __tablename__ = 'liked_by_candidate'
     liked_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))

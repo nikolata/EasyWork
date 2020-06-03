@@ -10,11 +10,12 @@ class CompanyModel(Base):
     company_id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     email = Column(String, unique=True)
+    password = Column(String)
     description = Column(String)
     active = Column(Boolean, default=True)
 
 
-class ViewedCandidatesByCompany(Base):
+class ViewedCandidatesByCompanyModel(Base):
     __tablename__ = 'viewed_by_company'
     viewed_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
@@ -24,7 +25,7 @@ class ViewedCandidatesByCompany(Base):
     company = relationship('CompanyModel')
 
 
-class LikedCandidatesByCompany(Base):
+class LikedCandidatesByCompanyModel(Base):
     __tablename__ = 'liked_by_compay'
     liked_id = Column(Integer, primary_key=True)
     candidate_id = Column(Integer, ForeignKey('candidates.candidate_id'))
