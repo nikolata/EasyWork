@@ -59,8 +59,8 @@ class CompanyView:
             self.company.sign_up(name=request.form["name"], email=request.form["email"],
                                  password=request.form["password"], description=request.form["description"])
             session['logged_in'] = True
-            return redirect(url_for('company_home'))
-        return render_template("sign_up.html")
+            return redirect(url_for('welcome'))
+        return render_template("sign_up_as_company.html")
 
     @app.route('/logout')
     @login_required

@@ -1,19 +1,20 @@
 from .gateway import CandidateGateway, ViewedJobsByCandidateGateway, LikedJobsByCandidateGateway
 from jobs.controller import JobController
-import hashlib
-
-
-def hash_password(password):
-    return hashlib.sha512(password.encode()).hexdigest()
+from utls import hash_password
 
 
 class CandidateController:
     def __init__(self):
         self.gateway = CandidateGateway()
 
-    def add_candidate(self, name, email, password, phone, about_me, category_id, cv_link=None):
+    def sign_up(self, name, email, password, category, phone=None, about_me=None, cv_link=None):
+        category_id = category  # TODO
         password = hash_password(password)
         self.gateway.insert(name, email, password, phone, about_me, cv_link, category_id)
+
+    def log_in(self, email, password):
+        password = hash_password(password)
+        return self.gateway.select_one(email, password)
 
     def activate_account(self, candidate_id):
         self.gateway.update_active(True, candidate_id)
@@ -43,7 +44,7 @@ class ViewedJobsByCandidateController:
         self.gateway = ViewedJobsByCandidateGateway()
 
     def get_all_jobs(self, candidate_id):
-        self.gateway.select_all(candidate_id)
+        return self.gateway.select_all(candidate_id)
 
 
 class LikedJobsByCandidateController:
@@ -51,4 +52,4 @@ class LikedJobsByCandidateController:
         self.gateway = LikedJobsByCandidateGateway()
 
     def get_all_jobs(self, candidate_id):
-        self.gateway.select_all(candidate_id)
+        return self.gateway.select_all(candidate_id)

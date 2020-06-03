@@ -32,6 +32,23 @@ def welcome():
     return render_template("welcome.html")
 
 
+@app.route('/log_in', methods=['POST', 'GET'])
+def log_in():
+    # company_view = CompanyView()
+    candidate_view = CandidateView()
+    error = None
+    if request.method == 'POST':
+    #     if company_view.log_in(email=request.form['email'], password=request.form['password']):
+    #         session['logged_in'] = True
+    #         return company_view.change_to_company_home()
+        if candidate_view.log_in(email=request.form['email'], password=request.form['password']):
+            session['logged_in'] = True
+            return candidate_view.change_to_candidate_home()
+        else:
+            error = 'Wrong input!!!!'
+    return render_template('log_in.html', error=error)
+
+
 @app.route('/sign_up_as_company', methods=['POST', 'GET'])
 def sign_up_as_company():
     view = CompanyView()
@@ -54,6 +71,12 @@ def log_in():
         else:
             error = 'Wrong input!!!!'
     return render_template('log_in.html', error=error)
+
+
+@app.route('/sign_up_as_candidate', methods=['POST', 'GET'])
+def sign_up_as_candidate():
+    view = CandidateView()
+    return view.sign_up()
 
 
 if __name__ == '__main__':

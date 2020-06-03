@@ -26,4 +26,18 @@ class JobModel(Base):
     company_id = Column(Integer, ForeignKey('companies.company_id'))
     timestamp = Column(DateTime, default=datetime.now())
     category = relationship('CategoryModel')
-    company = relationship('CompanyModel')
+    company = relationship('CompanyModel', lazy="joined")
+
+    def __str__(self):
+        net = ""
+        if self.is_net:
+            net = "Bruto"
+        else:
+            net = "Neto"
+        return f'''{self.company.name}\n
+                   {self.title}\n
+                   Position: {self.position}\n
+                   City: {self.city}\n
+                   Salary: {self.salary} {self.salary_type} {net}\n
+                   Description: {self.description}\n
+                   Time of creation: {self.timestamp}'''

@@ -26,7 +26,11 @@ class ViewedJobsByCandidateModel(Base):
     job_id = Column(Integer, ForeignKey('jobs.job_id'))
     timestamp = Column(DateTime, default=datetime.now())
     candidate = relationship('CandidateModel')
-    job = relationship('JobModel')
+    job = relationship('JobModel', lazy="joined")
+
+    def __str__(self):
+        return f'''Viewed at: {self.timestamp}\n
+                   {self.job}'''
 
 
 class LikedJobsByCandidateModel(Base):
@@ -36,4 +40,8 @@ class LikedJobsByCandidateModel(Base):
     job_id = Column(Integer, ForeignKey('jobs.job_id'))
     timestamp = Column(DateTime, default=datetime.now())
     candidate = relationship('CandidateModel')
-    job = relationship('JobModel')
+    job = relationship('JobModel', lazy="joined")
+
+    def __str__(self):
+        return f'''Viewed at: {self.timestamp}\n
+                   {self.job}'''
