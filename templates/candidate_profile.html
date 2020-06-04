@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+  <style type="text/css">
+    .red_star{  display:inline;color:red }
+  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+</head>
+<body>
+	<form action="/candidate_home/edited" method="post">
+		<input type="text" placeholder="First name" name="first_name", value="{{ first_name }}">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="text" placeholder="Last name" name="last_name", value="{{ last_name }}">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="text" placeholder="Email" name="email", value="{{ candidate.email }}">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="password" placeholder="Old password" name="old_password">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="password" placeholder="New password" name="new_password">
+    <input type="password" placeholder="New password again" name="new_again_password"><br>
+    <input type="text" placeholder="Phone number" name="phone", value="{{ candidate.phone }}"><br>
+    <input type="text" placeholder="About me" name="about_me", value="{{ candidate.about_me }}"><br>
+    <input type="text" placeholder="CV link" name="cv_link", value="{{ candidate.cv_link }}"><br>
+    <label>Field of work: </label>
+    <select id="category" name="category">
+        {% for category in categories %}
+          <option value="{{ category.category_id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <div class="red_star">
+      *
+    </div>
+    <p>
+      <input class="btn btn-default" type="submit" value="Edit">
+    </p>
+    {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+	</form>
+</body>
+</html>

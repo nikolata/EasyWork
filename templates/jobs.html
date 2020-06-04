@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+</head>
+<body>
+	<hr>
+	<div class="container">
+		<table style='width: 100%'>
+	    	<tbody>
+				<tr><td>{{ job.company.name }}</td></tr>
+		        <tr><td>{{ job.title }}</td></tr>
+		        <tr><td>Position: {{ job.position }}</td></tr>
+		        <tr><td>City: {{ job.city }}</td></tr>
+		        {% if job.is_net %}
+		        	<tr><td>Salary: {{ job.salary }} {{ job.salary_type }} Neto</td></tr>
+		        {% else %}
+		        	<tr><td>Salary: {{ job.salary }} {{ job.salary_type }} Bruto</td></tr>
+		        {% endif %}
+		        <tr><td>Description: {{ job.description }}</td></tr>
+		        <tr><td>Time of creation: {{ job.timestamp }}</td></tr>
+		    </tbody>
+		</table>
+		<hr>
+		<form action="/candidate_home/jobs/response" method="POST">
+			<input type="hidden" name="job" value="{{ job.job_id }}">
+			<input type="hidden" name="category" value="{{ job.category_id }}">
+			<input type="submit" name="submit_button" value="Like">
+			<input type="submit" name="submit_button" value="Dislike">
+		</form>
+	</div>
+</body>
+</html>

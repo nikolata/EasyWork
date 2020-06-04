@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+  <style type="text/css">
+    .red_star{  display:inline;color:red }
+  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+</head>
+<body>
+	<form action="" method="post">
+		<input type="text" placeholder="First name" name="first_name">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="text" placeholder="Last name" name="last_name">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="text" placeholder="Email" name="email">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="password" placeholder="Password" name="password">
+    <div class="red_star">
+      *
+    </div><br>
+    <input type="text" placeholder="Phone number" name="phone"><br>
+    <input type="text" placeholder="About me" name="about_me"><br>
+    <input type="text" placeholder="CV link" name="cv_link"><br>
+    <label>Field of work: </label>
+    <select id="category" name="category">
+        {% for category in categories %}
+          <option value="{{ category.category_id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <div class="red_star">
+      *
+    </div>
+    <p>
+      <input class="btn btn-default" type="submit" value="Submit">
+    </p>
+    {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+	</form>
+</body>
+</html>

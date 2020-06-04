@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+	<style type="text/css">
+		.red_star{  display:inline;color:red }
+	</style>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+</head>
+<body>
+	<form action="/candidate_home/edit">
+		<input type="submit" name="submit_button" value="Edit Profile"><br>
+	</form>
+	<form action="/candidate_home/chats">
+		<input type="submit" name="submit_button" value="Show chats"><br>
+		<!-- <label>Company: </label>
+	    <select id="company" name="company">
+	        {% for company in companies %}
+	          <option value={{ company.company_id }}>{{ category.name }}</option>
+	        {% endfor %}
+	    </select>
+	    <div class="red_star">
+	    	*
+	    </div> -->
+	</form>
+	<form action="/candidate_home/liked">
+		<input type="submit" name="submit_button" value="Show liked_jobs"><br>
+	</form>
+	<form action="/candidate_home/viewed">
+		<input type="submit" name="submit_button" value="Show viewed_jobs"><br>
+	</form>
+	<form action="/candidate_home/jobs" method="post">
+		<input type="submit" name="submit_button" value="Show jobs">
+		<label>Category: </label>
+	    <select id="category" name="category">
+	        {% for category in categories %}
+	          <option value={{ category.category_id }}>{{ category.name }}</option>
+	        {% endfor %}
+	    </select>
+	    <div class="red_star">
+	    	*
+	    </div>
+	</form>
+	<p>
+		<form action="/log_out">
+			<input type="submit" name="submit_button" value="Log out">
+		</form>
+	</p>
+</body>
+</html>

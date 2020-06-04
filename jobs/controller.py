@@ -29,3 +29,6 @@ class JobController:
 
     def update_job(self, job_id, title, city, position, description, salary, salary_type, is_net):
         self.job_gateway.update_job(job_id, title, city, position, description, salary, salary_type, is_net)
+
+    def select_jobs_by_category(self, category):
+        return self.job_gateway.select_jobs_by_category(category)

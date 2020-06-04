@@ -1,11 +1,13 @@
-from .model import CandidateModel, ViewedJobsByCandidateModel
+from .model import CandidateModel, ViewedJobsByCandidateModel, LikedJobsByCandidateModel
 from database import session_scope
+from sqlalchemy import and_
 
 
 class CandidateGateway:
     def insert(self, name, email, password, phone, about_me, cv_link, category_id):
         with session_scope() as session:
-            session.add(CandidateModel(name, email, password, phone, about_me, cv_link, category_id))
+            session.add(CandidateModel(name=name, email=email, password=password,
+                                       phone=phone, about_me=about_me, cv_link=cv_link, field_of_work=category_id))
 
     def update_active(self, active, candidate_id):
         with session_scope() as session:
@@ -23,16 +25,33 @@ class CandidateGateway:
             candidate.cv_link = cv_link
             candidate.category_id = category_id
 
+    def select_one(self, email, password):
+        with session_scope() as session:
+            return session.query(CandidateModel).\
+                filter(and_(CandidateModel.email == email, CandidateModel.password == password)).first()
+
+    def select_one_by_id(self, candidate_id):
+        with session_scope() as session:
+            return session.query(CandidateModel).filter(CandidateModel.candidate_id == candidate_id).first()
+
 
 class ViewedJobsByCandidateGateway:
-    def select_all(candidate_id):
+    def select_all(self, candidate_id):
         with session_scope() as session:
             return session.query(ViewedJobsByCandidateModel).\
                 filter(ViewedJobsByCandidateModel.candidate_id == candidate_id).all()
+
+    def add(self, candidate_id, job_id):
+        with session_scope() as session:
+            session.add(ViewedJobsByCandidateModel(candidate_id=candidate_id, job_id=job_id))
 
 
 class LikedJobsByCandidateGateway:
-    def select_all(candidate_id):
+    def select_all(self, candidate_id):
         with session_scope() as session:
-            return session.query(ViewedJobsByCandidateModel).\
-                filter(ViewedJobsByCandidateModel.candidate_id == candidate_id).all()
+            return session.query(LikedJobsByCandidateModel).\
+                filter(LikedJobsByCandidateModel.candidate_id == candidate_id).all()
+
+    def add(self, candidate_id, job_id):
+        with session_scope() as session:
+            session.add(LikedJobsByCandidateModel(candidate_id=candidate_id, job_id=job_id))

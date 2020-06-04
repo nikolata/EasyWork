@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>EasyWork</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
 </head>
 <body>
 	<form action='' method='POST'>
@@ -21,7 +22,7 @@
 						<option value={{ like.candidate_id }} name={{ request.form.candidate }}>{{ candidate.name }}</option>
 						{% endfor %}
 					</select>
-					{% endif %}
+				{% endif %}
 			{% endfor %}
 		{% endfor %}
 		<table>
