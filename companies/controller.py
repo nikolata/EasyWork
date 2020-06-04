@@ -140,5 +140,5 @@ class CompanyController:
         for job in jobs:
             liked = self.company_gateway.get_candidate_who_liked_this_job(job.job_id)
             if liked is not None:
-                all_liked.append()
+                all_liked.append(liked)
         return all_liked

@@ -9,7 +9,7 @@ class CompanyView:
     def __init__(self):
         self.company = CompanyController()
 
-    def log_in(self, email, password):
+    def log_in_as_company(self, email, password):
         return self.company.log_in(email=request.form['email'], password=request.form['password'])
 
     def change_to_company_home(self):
@@ -73,7 +73,6 @@ class CompanyView:
     @login_required
     def liked_jobs():
         liked = CompanyController().get_candidates_that_liked_company_jobs()
-        print("LIKEDD", liked)
         error = None
         candidates = CompanyController().get_liked_candidates_by_company()
         categories = CompanyController().get_all_categories()

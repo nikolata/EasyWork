@@ -32,23 +32,6 @@ def welcome():
     return render_template("welcome.html")
 
 
-@app.route('/log_in', methods=['POST', 'GET'])
-def log_in():
-    # company_view = CompanyView()
-    candidate_view = CandidateView()
-    error = None
-    if request.method == 'POST':
-    #     if company_view.log_in(email=request.form['email'], password=request.form['password']):
-    #         session['logged_in'] = True
-    #         return company_view.change_to_company_home()
-        if candidate_view.log_in(email=request.form['email'], password=request.form['password']):
-            session['logged_in'] = True
-            return candidate_view.change_to_candidate_home()
-        else:
-            error = 'Wrong input!!!!'
-    return render_template('log_in.html', error=error)
-
-
 @app.route('/sign_up_as_company', methods=['POST', 'GET'])
 def sign_up_as_company():
     view = CompanyView()
@@ -61,13 +44,13 @@ def log_in():
     error = None
     candidate_view = CandidateView()
     if request.method == 'POST':
-        if company_view.log_in(email=request.form['email'], password=request.form['password']):
+        if company_view.log_in_as_company(email=request.form['email'], password=request.form['password']):
             session['logged_in'] = True
             session['category'] = 1
             return company_view.change_to_company_home()
         elif candidate_view.log_in(email=request.form['email'], password=request.form['password']):
             session['logged_in'] = True
-            return candidate_view.candidate_home()
+            return candidate_view.change_to_candidate_home()
         else:
             error = 'Wrong input!!!!'
     return render_template('log_in.html', error=error)

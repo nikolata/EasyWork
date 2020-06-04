@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>EasyWork</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
 </head>
 <body>
-	{% for job in jobs %}
-		<p>
-			{{ job.job.company.name }}
-		</p>
-		<p>
-            {{ job.job.title }}
-        </p>
-        <p>
-            Position: {{ job.job.position }}<br>
-            City: {{ job.job.city }}<br>
-            {% if job.job.is_net %}
-            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Neto<br>
-            {% else %}
-            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Bruto<br>
-            {% endif %}
-            Description: {{ job.job.description }}<br>
-            Time of creation: {{ job.job.timestamp }}<br>
-		</p>
-		<p>
-			{{ viewed_liked }} at :{{ job.timestamp }}			
-		</p>
-		<p>
-		</p>
-		<hr>
-	{% endfor %}
+	<div class="container_job">
+		<table style='width: 100%'>
+	    	<tbody>
+
+				{% for job in jobs %}
+					<tr><td>{{ job.job.company.name }}</td></tr>
+			        <tr><td>{{ job.job.title }}</td></tr>
+			       <tr><td> Position: {{ job.job.position }}</td></tr>
+			        <tr><td>City: {{ job.job.city }}</td></tr>
+			        {% if job.job.is_net %}
+			        	<tr><td>Salary: {{ job.job.salary }} {{ job.job.salary_type }} Net</td></tr>
+			        {% else %}
+			        	<tr><td>Salary: {{ job.job.salary }} {{ job.job.salary_type }} Gross</td></tr>
+			        {% endif %}
+			        <tr><td>Description: {{ job.job.description }}</td></tr>
+			        <tr><td>Time of creation: {{ job.job.timestamp }}</td></tr>
+					<tr><td>{{ viewed_liked }} at :{{ job.timestamp }}</td></tr>
+					<tr><td><hr></td></tr>	
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

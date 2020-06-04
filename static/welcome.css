@@ -1,5 +1,7 @@
 body {
-	background-image: url("building.jpg");
+	background-image: url("building_blur.jpg");
 	background-repeat: no-repeat;
   	background-size: auto;
+  	width: 100%;
+  	height: 100%;
 }
