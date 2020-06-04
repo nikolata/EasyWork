@@ -6,17 +6,21 @@ import messages.model
 # from jobs.model import JobModel
 # from database import session_scope
 # from index_view import CompanyCaller
-from flask import Flask, render_template, redirect, url_for, request, flash, session
+from flask import render_template, redirect, url_for, request, flash, session
 from functools import wraps
 from companies.view import CompanyView
 from candidates.view import CandidateView
 from settings import app
+from utls import login_required
+
 
 app.secret_key = '5Al6aSD}sy,$OZ_'
 
 
 @app.route('/', methods=['POST', 'GET'])
 def welcome():
+    session.pop('logged_in', None)
+
     if request.method == 'POST':
         if request.form['submit_button'] == 'Sign up as company':
             return redirect(url_for('sign_up_as_company'))
@@ -24,6 +28,7 @@ def welcome():
             return redirect(url_for('sign_up_as_candidate'))
         elif request.form['submit_button'] == 'Log in':
             return redirect(url_for('log_in'))
+
     return render_template("welcome.html")
 
 
@@ -41,6 +46,7 @@ def log_in():
     if request.method == 'POST':
         if company_view.log_in(email=request.form['email'], password=request.form['password']):
             session['logged_in'] = True
+            session['category'] = 1
             return company_view.change_to_company_home()
         elif candidate_view.log_in(email=request.form['email'], password=request.form['password']):
             session['logged_in'] = True

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EasyWork</title>
+</head>
+<body>
+    <form action="" method="POST">
+        <label for="company_name">Old name: {{ company.name }}</label>
+        <input id='company_name' type="text" placeholder= 'New name' name="company_name" value={{request.form.company_name}}>
+        </br>
+        <label for="company_email">Old email: {{ company.email }}</label>
+        <input id='company_email' type="text" placeholder= 'New email' name="company_email" value={{request.form.company_email}}>
+        </br>
+        <label for="company_description">Old description: {{ company.description }}</label>
+        <input id='company_description' type="text" placeholder= 'New description' name="company_description" value={{request.form.company_description}}>
+        </br>
+        <input type="submit" name="submit_button" value="Update">
+        <input type="submit" name="submit_button" value="Go back">
+    </form>
+</body>
+</html>
