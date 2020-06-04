@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	<form action='' method='POST'>
+		<input type="submit" name="submit_button" value="Go back">
+	</form>
+	{% if error %}
+		<p class="error"><strong>Error:</strong> {{ error }}
+	{% else %}
+		<form action="" method="POST">
+		<label for="candidate">Choose a candidate:</label>
+		<select name="candidate" id="candidate">
+			{% for candidate in candidates %}
+			<option value={{ candidate.candidate_id }} name={{ request.form.candidate }}>{{ candidate.name }}</option>
+			{% endfor %}
+		</select>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone</th>
+					<th>About candidate</th>
+					<th>CV link</th>
+					<th>Category</th>
+				</tr>
+				{% for candidate in candidates%}
+					<tr>
+						<td>{{ candidate.name }}</td>
+						<td>{{ candidate.email }}</td>
+						<td>{{ candidate.phone }}</td>
+						<td>{{ candidate.about_me }}</td>
+						<td>{{ candidate.cv_link }}</td>
+						{% for category in categories %}
+							{% if candidate.field_of_work == category.category_id %}
+								<td>{{ category.name }}</td>
+							{% endif %}
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</table>
+			<input type="submit" name="submit_button" value="Delete">
+			<input type="submit" name="submit_button" value="Send message">
+		</form>
+	{% endif %}
+</body>
+</html>

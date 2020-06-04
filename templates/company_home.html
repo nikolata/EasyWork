@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+</head>
+<body>
+	<form action="" method="post">
+        <input class="btn btn-default" type="submit" name="submit_button" value="Manage jobs">
+        <input class="btn btn-default" type="submit" name="submit_button" value="Profile settings">
+        <input type="submit" name="submit_button" value="Liked candidates">
+        <input type="submit" name="submit_button" value="Liked jobs">
+        <input type="submit" name="submit_button" value="Log out">
+
+    </form>
+    {% if error %}
+		<form action='' method="post">
+	    <label for="category">Choose a category that you want to view:</label>
+		<select name="category" id="category">
+			{% for category in categories %}
+			<option value={{ category.category_id }} name={{ request.form.category }}>{{ category.name }}</option>
+			{% endfor %}
+		</select>
+	    <input type="submit" name="submit_button" value="Change category">
+		</form>
+		<p class="error"><strong>Error:</strong> {{ error }}
+    {% else %}
+	    <form action='' method="post">
+	    <label for="category">Choose a category that you want to view:</label>
+		<select name="category" id="category">
+			{% for category in categories %}
+			<option value={{ category.category_id }} name={{ request.form.category }}>{{ category.name }}</option>
+			{% endfor %}
+		</select>
+		</form>
+	<form action='' method="post">
+
+		<div class="container">
+		    <table style='width: 100%'>
+		    	<tbody>
+			    	<tr><td>{{ candidate.name }}</td></tr>
+			    	<tr><td>{{ candidate.email }}</td></tr>
+			    	<tr><td>{{ candidate.phone }}</td></tr>
+			    	<tr><td>{{ candidate.about_me }}</td></tr>
+			    	<tr><td>{{ candidate.cv_link }}</td></tr>
+		    	</tbody>
+		    </table>
+		    	<input type="submit" name="submit_button" value="Pass">
+		        <input type="submit" name="submit_button" value="Like">
+				
+			</form>
+		</div>
+	{% endif %}
+    <p>{{ company.email }}</p>
+</body>
+</html>

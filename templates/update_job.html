@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	<form action="" method="POST">
+		<label for="job_title">Old title: {{ job.title }}</label>
+		<input id='job_title' type="text" placeholder= 'New title' name="job_title" value={{request.form.job_title}}>
+		</br>
+		<label for="job_city">Old city: {{ job.city }}</label>
+		<input id='job_city' type="text" placeholder= 'New city' name="job_city" value={{request.form.job_city}}>
+		</br>
+		<label for="job_position">Old position: {{ job.position }}</label>
+		<input id='job_position' type="text" placeholder= 'New position' name="job_position" value={{request.form.job_position}}>
+		</br>
+		<label for="job_description">Old description: {{ job.description }}</label>
+		<input id='job_description' type="text" placeholder= 'New description' name="job_description" value={{request.form.job_description}}>
+		</br>
+		<label for="job_salary">Old salary: {{ job.salary }}{{ job.salary_type }}</label>
+		<input id='job_salary' type="text" placeholder= 'New salary' name="job_salary" value={{request.form.job_salary}}>
+		</br>
+		<label for="job_salary_type">Old salary type: {{ job.salary_type }}</label>
+		<select name="job_salary_type" id="job_salary_type">
+			<option value='lv' name={{ request.form.salary_type }}>lv</option>
+			<option value='eur' name={{ request.form.salary_type }}>eur</option>
+		</select>
+		</br>
+		<label for="is_net">Choose gross/net:</label>
+		<select name="is_net" id="is_net">
+			<option value='gross' name={{ request.form.is_net }}>gross</option>
+			<option value='net' name={{ request.form.is_net }}>net</option>
+		</select>
+		</br>
+		<input type="submit" name="submit_button" value="Update job">
+		<input type="submit" name="submit_button" value="Go back">
+	</form>
+</body>
+</html>

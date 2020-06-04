@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	<form action="" method="post">
+		<label for="category">Choose a category:</label>
+		<select name="category" id="category">
+			{% for category in categories %}
+			<option value={{ category.name }} name={{ request.form.category }}>{{ category.name }}</option>
+			{% endfor %}
+		</select></br>
+		<input type="text" placeholder="Title" name="title" value="{{request.form.title }}">
+		</br>
+		<input type="text" placeholder="City" name="city" value="{{request.form.city }}">
+		</br>
+		<input type="text" placeholder="Position" name="position" value="{{request.form.position }}">
+		</br>
+		<input type="text" placeholder="Description" name="description" value="{{request.form.description }}">
+		</br>
+		<input type="text" placeholder="Salary" name="salary" value="{{request.form.salary }}">
+		</br>
+		<label for="type">Choose a salary type:</label>
+		<select name="salary_type" id="salary">
+			<option value='lv' name={{ request.form.salary_type }}>lv</option>
+			<option value='eur' name={{ request.form.salary_type }}>eur</option>
+		</select>
+		</br>
+		<label for="is_net">Choose gross/net:</label>
+		<select name="is_net" id="is_net">
+			<option value='gross' name={{ request.form.is_net }}>gross</option>
+			<option value='net' name={{ request.form.is_net }}>net</option>
+		</select>
+		</br>
+		<input type="submit" name="submit_button" value="Add job">
+		<input type="submit" name="submit_button" value="Go back">
+	</form>
+</body>
+</html>
