@@ -14,5 +14,5 @@ class MessageModel(Base):
     send_by = Column(Boolean)
     seen = Column(Boolean, default=False)
     message = Column(String)
-    company = relationship('CompanyModel')
-    candidate = relationship('CandidateModel')
+    company = relationship('CompanyModel', lazy="joined")
+    candidate = relationship('CandidateModel', lazy="joined")

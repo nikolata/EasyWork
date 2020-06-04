@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	{% for message in messages %}
+		<p>
+			{{ job.job.company.name }}
+		</p>
+		<p>
+            {{ job.job.title }}
+        </p>
+        <p>
+            Position: {{ job.job.position }}<br>
+            City: {{ job.job.city }}<br>
+            {% if job.job.is_net %}
+            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Neto<br>
+            {% else %}
+            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Bruto<br>
+            {% endif %}
+            Description: {{ job.job.description }}<br>
+            Time of creation: {{ job.job.timestamp }}<br>
+		</p>
+		<p>
+			{{ viewed_liked }} at :{{ job.timestamp }}			
+		</p>
+		<p>
+		</p>
+		<hr>
+	{% endfor %}
+</body>
+</html>

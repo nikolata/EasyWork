@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EasyWork</title>
+</head>
+<body>
+	<hr>
+	<p>
+		{{ job.company.name }}
+	</p>
+	<p>
+        {{ job.title }}
+    </p>
+    <p>
+        Position: {{ job.position }}<br>
+        City: {{ job.city }}<br>
+        {% if job.is_net %}
+        	Salary: {{ job.salary }} {{ job.salary_type }} Neto<br>
+        {% else %}
+        	Salary: {{ job.salary }} {{ job.salary_type }} Bruto<br>
+        {% endif %}
+        Description: {{ job.description }}<br>
+        Time of creation: {{ job.timestamp }}<br>
+	</p>
+	<hr>
+	<form action="/candidate_home/jobs/response" method="POST">
+		<input type="hidden" name="job" value="{{ job.job_id }}">
+		<input type="hidden" name="category" value="{{ job.category_id }}">
+		<input type="submit" name="submit_button" value="Like">
+		<input type="submit" name="submit_button" value="Dislike">
+	</form>
+</body>
+</html>

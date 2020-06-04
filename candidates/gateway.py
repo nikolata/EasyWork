@@ -1,4 +1,4 @@
-from .model import CandidateModel, ViewedJobsByCandidateModel
+from .model import CandidateModel, ViewedJobsByCandidateModel, LikedJobsByCandidateModel
 from database import session_scope
 from sqlalchemy import and_
 
@@ -30,6 +30,10 @@ class CandidateGateway:
             return session.query(CandidateModel).\
                 filter(and_(CandidateModel.email == email, CandidateModel.password == password)).first()
 
+    def select_one_by_id(self, candidate_id):
+        with session_scope() as session:
+            return session.query(CandidateModel).filter(CandidateModel.candidate_id == candidate_id).first()
+
 
 class ViewedJobsByCandidateGateway:
     def select_all(self, candidate_id):
@@ -37,9 +41,17 @@ class ViewedJobsByCandidateGateway:
             return session.query(ViewedJobsByCandidateModel).\
                 filter(ViewedJobsByCandidateModel.candidate_id == candidate_id).all()
 
+    def add(self, candidate_id, job_id):
+        with session_scope() as session:
+            session.add(ViewedJobsByCandidateModel(candidate_id=candidate_id, job_id=job_id))
+
 
 class LikedJobsByCandidateGateway:
     def select_all(self, candidate_id):
         with session_scope() as session:
-            return session.query(ViewedJobsByCandidateModel).\
-                filter(ViewedJobsByCandidateModel.candidate_id == candidate_id).all()
+            return session.query(LikedJobsByCandidateModel).\
+                filter(LikedJobsByCandidateModel.candidate_id == candidate_id).all()
+
+    def add(self, candidate_id, job_id):
+        with session_scope() as session:
+            session.add(LikedJobsByCandidateModel(candidate_id=candidate_id, job_id=job_id))
