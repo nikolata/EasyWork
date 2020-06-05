@@ -10,17 +10,17 @@ class MessageView:
     def add_new_message():
         controller = MessageController()
         if "candidate_id" in session:
-            controller.add_message(request.form["company_id"], request.form["candidate_id"],
-                                   1, request.form["message"])
             if request.method == 'POST':
                 if request.form['submit_button'] == 'Go back':
                     return redirect(url_for('candidate_home'))
-        else:
             controller.add_message(request.form["company_id"], request.form["candidate_id"],
-                                   0, request.form["message"])
+                                   1, request.form["message"])
+        else:
             if request.method == 'POST':
                 if request.form['submit_button'] == 'Go back':
                     return redirect(url_for('company_home'))
+            controller.add_message(request.form["company_id"], request.form["candidate_id"],
+                                   0, request.form["message"])
 
         messages = controller.get_messages(request.form["company_id"], request.form["candidate_id"])
         return render_template("messages.html", messages=messages)

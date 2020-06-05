@@ -6,6 +6,10 @@
 </head>
 <body>
 	<form action="/candidate_home/add_message" method="post">
+		{% if not messages %}
+			<input type="hidden" name="company_id" value="{{ company_id }}">
+			<input type="hidden" name="candidate_id" value="{{ candidate_id }}">
+		{% endif %}
 		{% for message in messages %}
 			<p>
 				{% if message.send_by %}
@@ -25,7 +29,7 @@
 		<input type="hidden" name="company_id" value="{{ message.company_id }}">
 		{% endfor %}
 		<input type="text" placeholder="Message" name="message">
-		<input class="btn btn-default" type="submit" value="Send">
+		<input class="btn btn-default" type="submit" name='submit_button' value="Send">
 		<input class="btn btn-default" type="submit" name='submit_button' value="Go back">
 	</form>
 </body>

@@ -1,7 +1,6 @@
 from .controller import CompanyController
 from flask import render_template, request, redirect, url_for, session, flash
 from utls import login_required
-from candidates.controller import CandidateController
 from settings import app
 from messages.controller import MessageController
 
@@ -249,4 +248,5 @@ class CompanyView:
         message = MessageController()
         messages = message.get_all_messages_with_given_company_and_candidate(curr_company.company_id,
                                                                              session["candidate"])
-        return render_template("messages.html", messages=messages)
+        return render_template("messages.html", messages=messages,
+                                company_id=curr_company.company_id, candidate_id=session["candidate"])
