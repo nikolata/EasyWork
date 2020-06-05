@@ -12,12 +12,6 @@
 		<p class="error"><strong>Error:</strong> {{ error }}
 	{% else %}
 		<form action="" method="POST">
-		<label for="candidate">Choose a candidate:</label>
-		<select name="candidate" id="candidate">
-			{% for candidate in candidates %}
-			<option value={{ candidate.candidate_id }} name={{ request.form.candidate }}>{{ candidate.name }}</option>
-			{% endfor %}
-		</select>
 			<table>
 				<tr>
 					<th>Name</th>
@@ -43,7 +37,15 @@
 				{% endfor %}
 			</table>
 			<input type="submit" name="submit_button" value="Delete">
-			<input type="submit" name="submit_button" value="Send message">
+			<form action="/candidate_home/chats_company" method='POST'>
+				<label for="candidate">Choose a candidate:</label>
+				<select name="candidate" id="candidate">
+					{% for candidate in candidates %}
+					<option value={{ candidate.candidate_id }} name={{ request.form.candidate }}>{{ candidate.name }}</option>
+					{% endfor %}
+				</select>
+				<input type="submit" name="submit_button" value="Send message">
+			</form>
 		</form>
 	{% endif %}
 </body>

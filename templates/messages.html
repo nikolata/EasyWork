@@ -2,32 +2,30 @@
 <html>
 <head>
 	<title>EasyWork</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
 </head>
 <body>
-	{% for message in messages %}
-		<p>
-			{{ job.job.company.name }}
-		</p>
-		<p>
-            {{ job.job.title }}
-        </p>
-        <p>
-            Position: {{ job.job.position }}<br>
-            City: {{ job.job.city }}<br>
-            {% if job.job.is_net %}
-            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Neto<br>
-            {% else %}
-            	Salary: {{ job.job.salary }} {{ job.job.salary_type }} Bruto<br>
-            {% endif %}
-            Description: {{ job.job.description }}<br>
-            Time of creation: {{ job.job.timestamp }}<br>
-		</p>
-		<p>
-			{{ viewed_liked }} at :{{ job.timestamp }}			
-		</p>
-		<p>
-		</p>
-		<hr>
-	{% endfor %}
+	<form action="/candidate_home/add_message" method="post">
+		{% for message in messages %}
+			<p>
+				{% if message.send_by %}
+					<div style="text-align:right;">
+						{{ message.candidate.name }} :
+	            		{{ message.message }}
+	              		time: {{ message.timestamp }}
+					</div>
+				{% else %}
+					{{ message.company.name }} :
+	            	{{ message.message }}
+	             	time: {{ message.timestamp }}
+				{% endif %}
+			</p>
+			<hr>
+		<input type="hidden" name="candidate_id" value="{{ message.candidate_id }}">
+		<input type="hidden" name="company_id" value="{{ message.company_id }}">
+		{% endfor %}
+		<input type="text" placeholder="Message" name="message">
+		<input class="btn btn-default" type="submit" value="Send">
+	</form>
 </body>
 </html>

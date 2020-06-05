@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from utls import login_required
 from candidates.controller import CandidateController
 from settings import app
+from messages.controller import MessageController
 
 
 class CompanyView:
@@ -235,3 +236,12 @@ class CompanyView:
             if request.form['submit_button'] == 'Go back':
                 return redirect(url_for('company_home'))
         return render_template('update_job.html', job=current_job)
+
+    @app.route("/company_home/chats_company", methods=["POST"])
+    @login_required
+    def show_chats_company():
+        curr_company = CompanyController().get_current_company()
+        message = MessageController()
+        messages = message.get_all_messages_with_given_company_and_candidate(curr_company.id,
+                                                                             int(request.form["candidate"]))
+        return render_template("messages.html", messages=messages)

@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for, session
 from utls import login_required
 from settings import app
 from jobs.controller import CategoryController
-# from messages import MessageController
+from messages.controller import MessageController
 
 
 class CandidateView:
@@ -51,9 +51,11 @@ class CandidateView:
     def candidate_home():
         category = CategoryController()
         categories = category.get_all_categories()
-        # message = MessageController()
-        # companies = message.get_all_companies_a_candidate_messaged(session["candidate_id"])
-        return render_template("candidate_home.html", categories=categories)
+        message = MessageController()
+        messages = message.get_all_companies_a_candidate_messaged(session["candidate_id"])
+        companies = [message.company for message in messages]
+        print(companies)
+        return render_template("candidate_home.html", categories=categories,companies=companies)
 
     
     @app.route('/candidate_home/edit')
@@ -108,17 +110,14 @@ class CandidateView:
                 session['logged_in'] = True
         return redirect("/candidate_home")
 
-    
-    @app.route("/candidate_home/chats")
+    @app.route("/candidate_home/chats_candidate", methods=["POST"])
     @login_required
     def show_chats():
-        # message = MessageController()
-        # messages = message.get_all_messages_with_given_company_and_candidate(request.form["company"],
-        #                                                                      session["candidate_id"])
-        # return render_template("messages.html", messages=messages)
-        return "Soon. Go back"
+        message = MessageController()
+        messages = message.get_all_messages_with_given_company_and_candidate(request.form["company"],
+                                                                             session["candidate_id"])
+        return render_template("messages.html", messages=messages)
 
-    
     @app.route("/candidate_home/viewed")
     @login_required
     def show_viewed_jobs():
@@ -126,15 +125,13 @@ class CandidateView:
         jobs = controller.get_all_jobs(session["candidate_id"])
         return render_template("all_jobs.html", jobs=jobs, viewed_liked="Viewed")
 
-    
     @app.route("/candidate_home/liked")
     @login_required
     def show_liked_jobs():
         controller = LikedJobsByCandidateController()
         jobs = controller.get_all_jobs(session["candidate_id"])
         return render_template("all_jobs.html", jobs=jobs, viewed_liked="Liked")
-
-    
+   
     @app.route("/candidate_home/jobs", methods=["POST", "GET"])
     @login_required
     def show_new_job():
@@ -149,7 +146,6 @@ class CandidateView:
             return render_template("jobs.html", job=new_job)
         return render_template("too_picky.html")
 
-    
     @app.route("/candidate_home/jobs/response", methods=["POST", "GET"])
     @login_required
     def candidate_responce():

@@ -10,11 +10,14 @@ class MessageController:
         self.make_message_seen(company_id, candidate_id)
         return messages
 
-    def add_new_message(self, company_id, candidate_id, send_by, message):
+    def add_message(self, company_id, candidate_id, send_by, message):
         self.gateway.add_message(company_id, candidate_id, send_by, message)
 
-    def make_message_seen(self):
-        self.gateway.update_seen()
+    def make_message_seen(self, company_id, candidate_id):
+        self.gateway.update_seen(company_id, candidate_id)
 
     def get_all_companies_a_candidate_messaged(self, candidate_id):
         return self.gateway.select_company_id(candidate_id)
+
+    def get_messages(self, company_id, candidate_id):
+        return self.gateway.select_messages(company_id, candidate_id)

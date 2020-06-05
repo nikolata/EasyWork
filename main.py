@@ -10,6 +10,7 @@ from flask import render_template, redirect, url_for, request, flash, session
 from functools import wraps
 from companies.view import CompanyView
 from candidates.view import CandidateView
+from messages.view import MessageView
 from settings import app
 from utls import login_required
 
