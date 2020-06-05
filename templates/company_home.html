@@ -3,55 +3,113 @@
 <head>
 	<title>EasyWork</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
+	  <img src="static/logo.png" alt="EasyWork logo"  style="float:right">
+
 	<form action="" method="post">
-        <input class="btn btn-default" type="submit" name="submit_button" value="Manage jobs">
-        <input class="btn btn-default" type="submit" name="submit_button" value="Profile settings">
-        <input type="submit" name="submit_button" value="Liked candidates">
-        <input type="submit" name="submit_button" value="Liked jobs">
-        <input type="submit" name="submit_button" value="Log out">
+        <button class="btn btn-info" type="submit" name="submit_button" value="Manage jobs">Manage jobs</button><br><br>
+        <button class="btn btn-info" type="submit" name="submit_button" value="Profile settings">Profile settings</button><br><br>
+
+        <button class="btn btn-info" type="submit" name="submit_button" value="Liked candidates">Liked candidates</button><br><br>
+
+        <button class="btn btn-info" type="submit" name="submit_button" value="Liked jobs">Liked jobs </button><br><br>
+
+        <button class="btn btn-secondary" type="submit" name="submit_button" value="Log out"> Log out </button><br><br>
+
 
     </form>
     {% if error %}
 		<form action='' method="post">
-	    <label for="category">Choose a category that you want to view:</label>
+			<div class="container">
+		    	<table style=' margin: 0 auto; width:25%;'>
+<!-- 	    <label for="category">Choose a category that you want to view:</label>
 		<select name="category" id="category">
 			{% for category in categories %}
 			<option value={{ category.category_id }} name={{ request.form.category }}>{{ category.name }}</option>
 			{% endfor %}
 		</select>
-	    <input type="submit" name="submit_button" value="Change category">
-		</form>
-		<p class="error"><strong>Error:</strong> {{ error }}
-    {% else %}
-	    <form action='' method="post">
-	    <label for="category">Choose a category that you want to view:</label>
-		<select name="category" id="category">
-			{% for category in categories %}
-			<option value={{ category.category_id }} name={{ request.form.category }}>{{ category.name }}</option>
-			{% endfor %}
-		</select>
-	    <input type="submit" name="submit_button" value="Change category">
-		</form>
-	<form action='' method="post">
+	    <input type="submit" name="submit_button" value="Change category"> -->
+	    		    	<tbody>
 
+		    	<tr><td colspan="2" style="text-align: center;">
+					</select>
+	            <div class="dropdown">
+	              <select class="btn btn-secondary dropdown-toggle" role="button" id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='category'>
+	                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+	                {% for category in categories %}
+	                  <option class="dropdown-item"  value="{{ category.category_id }}">{{ category.name }}</option>
+	                {% endfor %}
+	                </div>
+	              </select>
+				    <button class="btn btn-secondary" type="submit" name="submit_button" value="Change category"> Change</button>
+            </div>
+
+		</td></tr>
+			<tr><td><p class="error"><strong>Error:</strong> {{ error }}</p></td></tr>
+		</tbody>
+		</table>
+		</div>
+		</form>
+    {% else %}
+	<form action='' method="post">
 		<div class="container">
-		    <table style='width: 100%'>
+		    <table style=' margin: 0 auto; width:25%;'>
 		    	<tbody>
-			    	<tr><td>{{ candidate.name }}</td></tr>
-			    	<tr><td>{{ candidate.email }}</td></tr>
-			    	<tr><td>{{ candidate.phone }}</td></tr>
-			    	<tr><td>{{ candidate.about_me }}</td></tr>
-			    	<tr><td>{{ candidate.cv_link }}</td></tr>
+
+		    	<tr><td colspan="2" style="text-align: center;">
+<!-- 					<select name="category" id="category">
+						{% for category in categories %}
+						<option value={{ category.category_id }} name={{ request.form.category }}>{{ category.name }}</option>
+						{% endfor %}-->
+					</select>
+	            <div class="dropdown">
+	              <select class="btn btn-secondary dropdown-toggle" role="button" id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='category'>
+	                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+	                {% for category in categories %}
+	                  <option class="dropdown-item"  value="{{ category.category_id }}">{{ category.name }}</option>
+	                {% endfor %}
+	                </div>
+	              </select>
+				    <button class="btn btn-secondary" type="submit" name="submit_button" value="Change category"> Change</button>
+            </div>
+
+				</td></tr>
+		    		<tr><td colspan="2" style="text-align: center;">
+		    			Candidate
+		    		</td>
+		    		</tr>
+	
+			    	<tr><td style="text-align: center;">
+			    	<label for='candidate_name'>Name:</label></td>
+			    	<td style="text-align: center;">
+			    	<div id='candidate_name'>{{ candidate.name }}</div></td></tr>
+			    	<tr><td style="text-align: center;">
+			    	<label for='candidate_email'>Email:  </label></td>
+			    	<td style="text-align: center;">
+			    	<div id='candidate_email'>{{ candidate.email }}</div></td></tr>
+			    	<tr><td style="text-align: center;">
+			    	<label for='candidate_phone'>Phone:</label></td>
+			    	<td style="text-align: center;">
+			    	<div id='candidate_phone'>{{ candidate.phone }}</div></td></tr>
+			    	<tr><td style="text-align: center;">
+			    	<label for='candidate_about'>About:</label></td>
+			    	<td style="text-align: center;">
+			    	<div id='candidate_about'>{{ candidate.about_me }}</div></td></tr>
+			    	<tr><td style="text-align: center;">
+			    	<label for='candidate_cv_link'>CV link:</label></td>
+			    	<td style="text-align: center;">
+			    	<div id='candidate_cv_link'>{{ candidate.cv_link }}</div></td></tr>
+			    	<tr>
+			    	<td style="text-align: center;"><button class="btn btn-outline-danger" type="submit" name="submit_button" value="Pass">Pass</button></td>
+			        <td style="text-align: center;"><button  class="btn btn-outline-success" type="submit" name="submit_button" value="Like"> Like </button></td>
+					</tr>
 		    	</tbody>
 		    </table>
-		    	<input type="submit" name="submit_button" value="Pass">
-		        <input type="submit" name="submit_button" value="Like">
-				
 			</form>
 		</div>
 	{% endif %}
-    <p>{{ company.email }}</p>
 </body>
 </html>
