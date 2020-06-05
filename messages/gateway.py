@@ -4,13 +4,13 @@ from database import session_scope
 
 
 class MessageGateway:
-    def select_messages(company_id, candidate_id):
+    def select_messages(self, company_id, candidate_id):
         with session_scope() as session:
             return session.query(MessageModel).\
                 filter(and_(MessageModel.candidate_id == candidate_id,
                             MessageModel.company_id == company_id)).all()
 
-    def add_message(company_id, candidate_id, send_by, message):
+    def add_message(self, company_id, candidate_id, send_by, message):
         with session_scope() as session:
             session.add(MessageModel(company_id=company_id, candidate_id=candidate_id, send_by=send_by,
                                      message=message))
@@ -23,5 +23,5 @@ class MessageGateway:
 
     def select_company_id(self, candidate_id):
         with session_scope() as session:
-            return session.query(MessageModel.company).filter(MessageModel.candidate_id == candidate_id).\
-                distinct(MessageModel.company_id).all()
+            return session.query(MessageModel).filter(MessageModel.candidate_id == candidate_id).\
+                distinct(MessageModel.company_id).group_by(MessageModel.company_id).all()

@@ -11,17 +11,17 @@
 	<form action="/candidate_home/edit">
 		<input type="submit" name="submit_button" value="Edit Profile"><br>
 	</form>
-	<form action="/candidate_home/chats">
-		<input type="submit" name="submit_button" value="Show chats"><br>
-		<!-- <label>Company: </label>
+	<form action="/candidate_home/chats_candidate" method="post">
+		<input type="submit" name="submit_button" value="Show chats">
+		<label>Company: </label>
 	    <select id="company" name="company">
 	        {% for company in companies %}
-	          <option value={{ company.company_id }}>{{ category.name }}</option>
+	          <option value={{ company.company_id }}>{{ company.name }}</option>
 	        {% endfor %}
 	    </select>
 	    <div class="red_star">
 	    	*
-	    </div> -->
+	    </div>
 	</form>
 	<form action="/candidate_home/liked">
 		<input type="submit" name="submit_button" value="Show liked_jobs"><br>
