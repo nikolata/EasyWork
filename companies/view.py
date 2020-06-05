@@ -70,15 +70,17 @@ class CompanyView:
         flash('You were logged out.')
         return redirect(url_for('welcome'))
 
-    @app.route('/company_home/liked_candidates', methods=['POST', 'GET'])
+    @app.route('/company_home/liked_jobs', methods=['POST', 'GET'])
     @login_required
     def liked_jobs():
         liked = CompanyController().get_candidates_that_liked_company_jobs()
+        print('LIKED', liked)
         error = None
-        candidates = CompanyController().get_liked_candidates_by_company()
+        candidates = CompanyController().get_all_candidates()
+        print('CANDIDATES', candidates)
         categories = CompanyController().get_all_categories()
         if len(liked) == 0:
-            error = 'Still 0 likes for your job :<'
+            error = 'Still 0 likes for your jobs'
         if request.method == 'POST':
             if request.form['submit_button'] == 'Go back':
                 return redirect(url_for('company_home'))
@@ -103,7 +105,7 @@ class CompanyView:
                 return redirect(url_for('liked_candidates'))
             if request.form['submit_button'] == 'Send message':
                 session["candidate"] = int(request.form["candidate"])
-                return redirect('/company_home/chats_company')
+                return redirect(url_for('show_chats_company'))
         return render_template('liked_candidates.html', candidates=candidates, error=error,
                                categories=categories)
 
@@ -137,6 +139,8 @@ class CompanyView:
             if request.form['submit_button'] == 'Delete job':
                 CompanyController().delete_job(int(request.form['job']))
                 return redirect(url_for('manage_jobs'))
+            if request.form['submit_button'] == 'Go back':
+                return redirect(url_for('company_home'))
         return render_template('manage_jobs.html', jobs=jobs, categories=categories)
 
     @app.route('/company_home/manage_jobs/update_profile', methods=['POST', 'GET'])
@@ -235,14 +239,14 @@ class CompanyView:
                                                is_net)
                 return redirect(url_for('company_home'))
             if request.form['submit_button'] == 'Go back':
-                return redirect(url_for('company_home'))
+                return redirect(url_for('manage_jobs'))
         return render_template('update_job.html', job=current_job)
 
-    @app.route("/company_home/chats_company", methods=["POST"])
+    @app.route("/company_home/chats_company", methods=["POST", "GET"])
     @login_required
     def show_chats_company():
         curr_company = CompanyController().get_current_company()
         message = MessageController()
-        messages = message.get_all_messages_with_given_company_and_candidate(curr_company.id,
+        messages = message.get_all_messages_with_given_company_and_candidate(curr_company.company_id,
                                                                              session["candidate"])
         return render_template("messages.html", messages=messages)

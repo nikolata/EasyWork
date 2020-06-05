@@ -96,7 +96,7 @@ class CompanyController:
         print(candidates)
         seen_candidates = self.company_gateway.get_all_seen_candidates(company.company_id)
         print(seen_candidates)
-        if len(seen_candidates) == 0:
+        if len(seen_candidates) == 0 and len(candidates) != 0:
             return candidates[0]
         for candidate in candidates:
             not_seen = True
@@ -142,3 +142,6 @@ class CompanyController:
             if liked is not None:
                 all_liked.append(liked)
         return all_liked
+
+    def get_all_candidates(self):
+        return self.company_gateway.get_all_candidates()

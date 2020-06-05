@@ -12,19 +12,18 @@
 		<p class="error"><strong>Error:</strong> {{ error }}
 	{% else %}
 		<form action="" method="POST">
-
+		<div class='container'>
 		<label for="candidate">Choose a candidate:</label>
+		<select name="candidate" id="candidate">
 		{% for candidate in candidates %}
 			{% for like in liked %}
 				{% if like.candidate_id == candidate.candidate_id %}
-					<select name="candidate" id="candidate">
-						{% for like in liked %}
 						<option value={{ like.candidate_id }} name={{ request.form.candidate }}>{{ candidate.name }}</option>
-						{% endfor %}
-					</select>
 				{% endif %}
 			{% endfor %}
 		{% endfor %}
+		</select>
+		<input type="submit" name="submit_button" value="Send message">
 		<table>
 			<tr>
 				<th>Name</th>
@@ -53,8 +52,8 @@
 			{% endfor %}
 		{% endfor %}
 			</table>
-			<input type="submit" name="submit_button" value="Delete">
-			<input type="submit" name="submit_button" value="Send message">
+		</div>
+
 		</form>
 	{% endif %}
 </body>

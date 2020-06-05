@@ -6,43 +6,77 @@
     .red_star{  display:inline;color:red }
   </style>
   <link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
+  <img src="static/logo.png" alt="EasyWork logo"  style="float:right">
 	<form action="" method="post">
-		<input type="text" placeholder="First name" name="first_name">
-    <div class="red_star">
-      *
-    </div><br>
-    <input type="text" placeholder="Last name" name="last_name">
-    <div class="red_star">
-      *
-    </div><br>
-    <input type="text" placeholder="Email" name="email">
-    <div class="red_star">
-      *
-    </div><br>
-    <input type="password" placeholder="Password" name="password">
-    <div class="red_star">
-      *
-    </div><br>
-    <input type="text" placeholder="Phone number" name="phone"><br>
-    <input type="text" placeholder="About me" name="about_me"><br>
-    <input type="text" placeholder="CV link" name="cv_link"><br>
-    <label>Field of work: </label>
-    <select id="category" name="category">
-        {% for category in categories %}
-          <option value="{{ category.category_id }}">{{ category.name }}</option>
-        {% endfor %}
-    </select>
-    <div class="red_star">
-      *
+    <div class = 'container'>
+      <table style=' margin: 0 auto; width:55%;' >
+        <tbody>
+          <tr><td>
+          <label for="exampleFormControlInput1">First name <div class="red_star">*</div></label>
+      		<input type="text" placeholder="first name" name="first_name" class="form-control" id="exampleFormControlInput1">
+          </td>
+          <td>
+          <label for="exampleFormControlInput2">Last name <div class="red_star">*</div></label>
+          <input type="text" placeholder="last name" name="last_name" class="form-control" id="exampleFormControlInput2">
+          </td>
+        </tr>
+          <tr><td>
+          <label for="exampleFormControlInput3"> Email <div class="red_star">*</div></label>
+          <input type="text" placeholder="example@exm.com" name="email" class="form-control" id="exampleFormControlInput3">
+          </td>
+          <td>
+          <label for="exampleFormControlInput4"> Password <div class="red_star">*</div></label>
+          <input type="password" placeholder="password" name="password" class="form-control" id="exampleFormControlInput4">
+          </td></tr>
+          <tr><td>
+          <label for="exampleFormControlInput5"> Phone number </label>
+          <input type="text" placeholder="Phone number" name="phone" class="form-control" id="exampleFormControlInput5">
+          </td>
+          <td>
+          <label for="exampleFormControlInput6"> About me </label>
+          <input type="text" placeholder="About me" name="about_me" class="form-control" id="exampleFormControlInput6">
+          </td></tr>
+          <tr><td>
+          <label for="exampleFormControlInput7"> CV link </label>
+          <input type="text" placeholder="CV link" name="cv_link" class="form-control" id="exampleFormControlInput6">
+          </td>
+<!--           <label>Field of work: </label>
+          <select id="category" name="category">
+              {% for category in categories %}
+                <option value="{{ category.category_id }}">{{ category.name }}</option>
+              {% endfor %}
+          </select> -->
+          <td>  
+            <label for="category"> Field of work <div class="red_star">*</div> </label>
+            <div class="dropdown">
+              <select class="btn btn-secondary dropdown-toggle" role="button" id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='category'>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for category in categories %}
+                  <option class="dropdown-item"  value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+                </div>
+              </select>
+            </div>
+          </td></tr>
+          <tr>
+            <td  colspan='2'>
+            <button class="btn btn-success" type="submit" value="Submit">Submit</button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              {% if error %}
+                <p class="error"><strong>Error:</strong> {{ error }}</p>
+              {% endif %}
+          </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <p>
-      <input class="btn btn-default" type="submit" value="Submit">
-    </p>
-    {% if error %}
-      <p class="error"><strong>Error:</strong> {{ error }}
-    {% endif %}
 	</form>
 </body>
 </html>

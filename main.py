@@ -21,6 +21,7 @@ app.secret_key = '5Al6aSD}sy,$OZ_'
 @app.route('/', methods=['POST', 'GET'])
 def welcome():
     session.pop('logged_in', None)
+    session.pop('candidate_id', None)
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'Sign up as company':

@@ -103,3 +103,7 @@ class CompanyGateway:
         with session_scope() as session:
             return session.query(LikedJobsByCandidateModel).\
                 filter(LikedJobsByCandidateModel.job_id.like(job_id)).first()
+
+    def get_all_candidates(self):
+        with session_scope() as session:
+            return session.query(CandidateModel).all()

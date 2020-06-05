@@ -3,50 +3,74 @@
 <head>
 	<title>EasyWork</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
 	<form action='' method='POST'>
-		<input class="btn btn-default" type="submit" name="submit_button" value="Add job">
+
+		<button  class="btn btn-info" type="submit" name="submit_button" value="Add job">Add job</button>
 		</br>
-		<label for="job">Choose job and what to do:</label>
+<!-- 		<label for="job">Choose job and what to do:</label>
 		<select name="job" id="job">
 			{% for job in jobs %}
 			<option value={{ job.job_id }} name={{ request.form.job }}>{{ job.title }}</option>
 			{% endfor %}
-		</select>
-		<input class="btn btn-default" type="submit" name="submit_button" value="Update job">
-		<input class="btn btn-default" type="submit" name="submit_button" value="Delete job">
-	</form>
+		</select> -->
+		<br>
+		
+		<button  class="btn btn-secondary" type="submit" name="submit_button" value="Go back">Go back </button>
 		</br>
-		<table>
-			<tr>
-				<th>Category</th>
-				<th>Title</th>
-				<th>City</th>
-				<th>Position</th>
-				<th>Description</th>
-				<th>Salary</th>
-				<th>Created at</th>
-			</tr>
-			{% for job in jobs %}
-				<tr>
-					{% for category in categories %}
-						{% if job.category_id == category.category_id %}
-							<td>{{ category.name }}</td>
+		<div class='container'>
+			<table width: 55% style="text-align: center; ">
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Title</th>
+						<th>City</th>
+						<th>Position</th>
+						<th>Description</th>
+						<th>Salary</th>
+						<th>Created at</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for job in jobs %}
+					<tr>
+						{% for category in categories %}
+							{% if job.category_id == category.category_id %}
+								<td>{{ category.name }}</td>
+							{% endif %}
+						{% endfor %}
+						<td>{{ job.title }}</td>
+						<td>{{ job.city }}</td>
+						<td>{{ job.position }}</td>
+						<td>{{ job.description }}</td>
+						{% if job.is_net == 1%}
+							<td>{{ job.salary }}{{ job.salary_type }} neto</td>
+						{% else %}
+							<td>{{ job.salary }}{{ job.salary_type }} gross</td>
 						{% endif %}
-					{% endfor %}
-					<td>{{ job.title }}</td>
-					<td>{{ job.city }}</td>
-					<td>{{ job.position }}</td>
-					<td>{{ job.description }}</td>
-					{% if job.is_net == 1%}
-						<td>{{ job.salary }}{{ job.salary_type }} neto</td>
-					{% else %}
-						<td>{{ job.salary }}{{ job.salary_type }} gross</td>
-					{% endif %}
-					<td>{{ job.timestamp }}</td>
+						<td>{{ job.timestamp }}</td>
+					</tr>
+				{% endfor %}
+				<tr>
+			<td colspan="2"><label for="job">Choose job and action:</label></td>
+        <td><div class="dropdown">
+      	<select class="btn btn-secondary dropdown-toggle" role="button" id="job" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='job'>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for job in jobs %}
+                  <option class="dropdown-item"  value={{ job.job_id }}>{{ job.title }}</option>
+                {% endfor %}
+        </div>
+	    </select>
+        </div></td>
+        <td colspan="2"><button  class="btn btn-outline-secondary" type="submit" name="submit_button" value="Update job">Update job</button></td>
+		<td colspan="2"><button  class="btn btn-outline-secondary" type="submit" name="submit_button" value="Delete job">Delete job</button></td>
 				</tr>
-			{% endfor %}
-		</table>
+				</tbody>
+			</table>
+		</div>
+	</form>
 </body>
 </html>
