@@ -105,7 +105,7 @@ class CompanyView:
                 return redirect(url_for('liked_candidates'))
             if request.form['submit_button'] == 'Send message':
                 session["candidate"] = int(request.form["candidate"])
-                return redirect('/company_home/chats_company')
+                return redirect(url_for('show_chats_company'))
         return render_template('liked_candidates.html', candidates=candidates, error=error,
                                categories=categories)
 
@@ -242,11 +242,11 @@ class CompanyView:
                 return redirect(url_for('manage_jobs'))
         return render_template('update_job.html', job=current_job)
 
-    @app.route("/company_home/chats_company", methods=["POST"])
+    @app.route("/company_home/chats_company", methods=["POST", "GET"])
     @login_required
     def show_chats_company():
         curr_company = CompanyController().get_current_company()
         message = MessageController()
-        messages = message.get_all_messages_with_given_company_and_candidate(curr_company.id,
+        messages = message.get_all_messages_with_given_company_and_candidate(curr_company.company_id,
                                                                              session["candidate"])
         return render_template("messages.html", messages=messages)

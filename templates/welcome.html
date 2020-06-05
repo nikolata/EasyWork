@@ -6,19 +6,20 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}" />
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<style type="text/css">
-    	.white{  color:white }
+    	.white{  color:white; }
   	</style>
 </head>
 <body>
-	<img src="static/logo.png" alt="EasyWork logo">
+	<img src="static/logo.png" alt="EasyWork logo" style="float:right; ">
 	<div class="white">
 		<h1>Welcome to EasyWork</h1>
+		<h3><i>"Our job is to find You a job"</i></h3>
 	</div>
 	<form action="" method="POST">
-		<input type="submit" name="submit_button" value="Sign up as candidate">
-		<input type="submit" name="submit_button" value="Sign up as company">
+		<button class="btn btn-primary" type="submit" name="submit_button" value="Sign up as candidate">Sign up as candidate</button>
+		<button class="btn btn-primary" type="submit" name="submit_button" value="Sign up as company">Sign up as company</button>
 
-			<button  type="submit" class="btn btn-outline-success" name="submit_button" value="Log in">
+			<button  type="submit" class="btn btn-success" name="submit_button" value="Log in">
 			    <span class="mdc-button__label">Log in</span>
 			</button>
 	</form>

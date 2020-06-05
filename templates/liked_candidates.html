@@ -3,6 +3,7 @@
 <head>
 	<title>EasyWork</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+	
 </head>
 <body>
 	<form action='' method='POST'>
@@ -12,7 +13,8 @@
 		<p class="error"><strong>Error:</strong> {{ error }}
 	{% else %}
 		<form action="" method="POST">
-			<table>
+		<div class='container'>
+			<table width: 55% style="text-align: center; width: 55% ">
 				<tr>
 					<th>Name</th>
 					<th>Email</th>
@@ -36,6 +38,7 @@
 					</tr>
 				{% endfor %}
 			</table>
+		</div>
 			<input type="submit" name="submit_button" value="Delete">
 			<form action="/candidate_home/chats_company" method='POST'>
 				<label for="candidate">Choose a candidate:</label>

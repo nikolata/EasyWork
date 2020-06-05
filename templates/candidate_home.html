@@ -6,13 +6,17 @@
 		.red_star{  display:inline;color:red }
 	</style>
 	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
+	<img src="static/logo.png" alt="EasyWork logo" style="float:right">
+	
 	<form action="/candidate_home/edit">
-		<input type="submit" name="submit_button" value="Edit Profile"><br>
+		<button class="btn btn-info" type="submit" name="submit_button" value="Edit Profile">Edit profile</button><br><br>
 	</form>
 	<form action="/candidate_home/chats_candidate" method="post">
-		<input type="submit" name="submit_button" value="Show chats">
+<!-- 		<input type="submit" name="submit_button" value="Show chats">
 		<label>Company: </label>
 	    <select id="company" name="company">
 	        {% for company in companies %}
@@ -21,16 +25,28 @@
 	    </select>
 	    <div class="red_star">
 	    	*
-	    </div>
+	    </div> -->
+	    
+	    <label for="company"> Company <div class="red_star">*</div> </label>
+            <div class="dropdown">
+              <select class="btn btn-secondary dropdown-toggle" role="button" id="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='company'>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for company in companies %}
+                  <option class="dropdown-item"  value="{{ company.company_id }}">{{ company.name }}</option>
+                {% endfor %}
+                </div>
+              </select>
+            </div>
+            <button class="btn btn-info" type="submit" name="submit_button" value="Show chats">Show chats</button><br><br>
 	</form>
 	<form action="/candidate_home/liked">
-		<input type="submit" name="submit_button" value="Show liked_jobs"><br>
+		<button class="btn btn-info" type="submit" name="submit_button" value="Show liked_jobs">Show liked jobs</button><br><br>
 	</form>
 	<form action="/candidate_home/viewed">
-		<input type="submit" name="submit_button" value="Show viewed_jobs"><br>
+		<button class="btn btn-info" type="submit" name="submit_button" value="Show viewed_jobs">Show viewed jobs</button><br><br>
 	</form>
 	<form action="/candidate_home/jobs" method="post">
-		<input type="submit" name="submit_button" value="Show jobs">
+<!-- 		<input type="submit" name="submit_button" value="Show jobs">
 		<label>Category: </label>
 	    <select id="category" name="category">
 	        {% for category in categories %}
@@ -39,11 +55,22 @@
 	    </select>
 	    <div class="red_star">
 	    	*
-	    </div>
+	    </div> -->
+	    	<label for="category"> Category <div class="red_star">*</div> </label>
+            <div class="dropdown">
+              <select class="btn btn-secondary dropdown-toggle" role="button" id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='category'>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for category in categories %}
+                  <option class="dropdown-item"  value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+                </div>
+              </select>
+            </div>
+            <button class="btn btn-info" type="submit" name="submit_button" value="Show jobs">Show jobs</button><br><br>
 	</form>
 	<p>
 		<form action="/log_out">
-			<input type="submit" name="submit_button" value="Log out">
+			<button class="btn btn-secondary" type="submit" name="submit_button" value="Log out">Log out</button>
 		</form>
 	</p>
 </body>

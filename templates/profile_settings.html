@@ -3,9 +3,13 @@
 <head>
 	<title>EasyWork</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='table_test.css') }}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
-	<table>
+	<div class = 'container'>
+      <table style=' margin: 0 auto; width:80%;' >
+		<tbody>
 		<tr>
 			<th>Name:</th>
 			<td>{{ company.name }}</td>
@@ -18,13 +22,16 @@
 			<th>Description:</th>
 			<td>{{ company.description }}</td>
 		</tr>
+		</tbody>
 	</table>
+</div>
 	</br>
 	<form action='' method='POST'>
-		<input type="submit" name="submit_button" value="Update profile">
-		<input type="submit" name="submit_button" value="Change password">
-		<input type="submit" name="submit_button" value="Delete profile">
-		<input type="submit" name="submit_button" value="Go back">
+		<button class="btn btn-info" type="submit" name="submit_button" value="Update profile">Update profile</button>
+		<button class="btn btn-info" name="submit_button" value="Change password">Change password</button>
+		<button class="btn btn-info" type="submit" name="submit_button" value="Delete profile">Delete profile</button>
+		<button class="btn btn-secondary" type="submit" name="submit_button" value="Go back">Go back</button>
+
 	</form>
 </body>
 </html>
