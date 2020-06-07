@@ -35,11 +35,11 @@ class CandidateView:
             session["password"] = password
         return candidate
 
-    
     @app.route('/log_out')
     @login_required
     def log_out():
         session.pop('logged_in', None)
+        session.pop('candidate_id', None)
         return redirect('/')
 
     def change_to_candidate_home(self):
